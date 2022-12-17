@@ -1,142 +1,85 @@
-import { Text, Stack, Box, Input, Container } from "@chakra-ui/react";
+import { MoonIcon, PhoneIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  Text,
+  Stack,
+  Box,
+  Input,
+  Container,
+  IconButton,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import HourWorking from "./components/HourWorking";
+import ListHourWorking from "./components/ListHourWorking";
+import PriceHour from "./components/PriceHour";
+import TotalHour from "./components/TotalHour";
+import HourContext from "./context/HoursContext";
 
 function App() {
-  const [monday, setMonday] = useState(0);
-  const [tuesday, setTuesday] = useState(0);
-  const [wednesday, setWednesday] = useState(0);
-  const [thursday, setThursday] = useState(0);
-  const [friday, setFriday] = useState(0);
-  const [saturday, setSaturday] = useState(0);
-  const [sunday, setSunday] = useState(0);
+  const { colorMode, toggleColorMode } = useColorMode();
 
-  let totalHours =
-    tuesday + monday + wednesday + thursday + friday + saturday + sunday;
+  console.log(colorMode);
 
-  const [priceHour, setPriceHour] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [precio, setPrecio] = useState(localStorage.getItem("precio") || 0);
 
-  let total = totalHours * priceHour;
+  const totalFinal = total * precio;
+
+  localStorage.setItem("precio", precio);
 
   return (
     <>
-      <Container
-        maxWidth="100%"
-        display="flex"
-        justifyContent="space-evenly"
-        alignItems="center"
-        flexDirection={{ base: "column", md: "row" }}
-        gap={4}
-        minHeight="100vh"
-        bgColor="#1B1C25"
-        padding={4}
-      >
-        <Stack direction="column" width={{base: "100%", md: "50%"}}>
-          <Text fontSize="32px" textAlign="center" color="#fff">
-            workingHours
-          </Text>
-
-          <Box
-            display="flex"
-            flexDirection="column"
-            padding={6}
-            margin="10px"
-            gap={4}
-            bgColor="#152A38"
+      <HourContext.Provider value={total}>
+        <Container
+          maxWidth="100%"
+          display="flex"
+          justifyContent="space-evenly"
+          alignItems="center"
+          flexDirection="column"
+          gap={4}
+          minHeight="100vh"
+          bgColor={colorMode == "dark" ? "#222831" : "FCFDF2"}
+          padding={4}
+        >
+          <Stack
+            direction="row"
+            width={{ base: "100%", md: "60%" }}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Text
+              width="100%"
+              fontSize="32px"
+              textAlign="center"
+              color={colorMode == "dark" ? "#F7F7F7" : "#181818"}
+            >
+              Horas extras
+            </Text>
+            <IconButton
+              icon={colorMode == "dark" ? <SunIcon /> : <MoonIcon />}
+              onClick={toggleColorMode}
+            />
+          </Stack>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            width={{ base: "100%", md: "100%" }}
+            maxWidth="900px"
+            bgColor={colorMode == "dark" ? "#30475E" :"#C7EEFF"  }
+            justifyContent="center"
+            padding={4}
             borderRadius="6px"
           >
-            <Box display="flex" justifyContent="space-between">
-              <Text fontSize="24px" color="#11999E">
-                Day
-              </Text>
-              <Text fontSize="24px" color="#11999E">
-                Hour
-              </Text>
-            </Box>
-
-            <Box display="flex" flexDirection="column" gap={4}>
-              <HourWorking title="Monday" seter={setMonday} />
-              <HourWorking title="Tuesday" seter={setTuesday} />
-              <HourWorking title="wednesday" seter={setWednesday} />
-              <HourWorking title="thursday" seter={setThursday} />
-              <HourWorking title="friday" seter={setFriday} />
-              <HourWorking title="saturday" seter={setSaturday} />
-              <HourWorking title="sunday" seter={setSunday} />
-            </Box>
-          </Box>
-        </Stack>
-        <Stack width={{base: "100%", md: "50%"}} gap={4} >
-          <Stack>
-            <Box
-              display="flex"
-              flexDirection="column"
-              padding={6}
-              gap={4}
-              bgColor="#152A38"
-              borderRadius="6px"
+            <ListHourWorking setTotal={setTotal} />
+            <Stack
+              justifyContent="space-between"
+              width={{ base: "100%", md: "50%" }}
             >
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="18px" textAlign="center" color="#11999E">
-                  Total Hours
-                </Text>
-                <Text fontSize="18px" textAlign="center" color="#11999E">
-                  Price hour
-                </Text>
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text fontSize="32px" color="#fff">
-                  {totalHours}
-                </Text>
-                <Text fontSize="32px" color="#fff">
-                  x
-                </Text>
-
-                <Input
-                  width="120px"
-                  fontSize="22px"
-                  textAlign="center"
-                  color="#11999E"
-                  placeholder="Ex. 200"
-                  padding="20px"
-                  size="sm"
-                  type="number"
-                  onChange={(evt) => {
-                    if (evt.target.value.length == 0) {
-                      console.log("Is zero");
-                      setPriceHour(0);
-                    } else {
-                      let priceHourDay = parseInt(evt.target.value);
-                      setPriceHour(priceHourDay);
-                    }
-                  }}
-                />
-              </Box>
-            </Box>
+              <PriceHour total={total} setPrecio={setPrecio} />
+              <TotalHour totalFinal={totalFinal} />
+            </Stack>
           </Stack>
-          <Stack >
-            <Box
-              display="flex"
-              flexDirection="column"
-              padding={6}
-              gap={4}
-              bgColor="#152A38"
-              borderRadius="6px"
-            >
-              <Text fontSize="32px" textAlign="center" color="#11999E">
-                Total
-              </Text>
-              <Text fontSize="36px" textAlign="center" color="#fff">
-                {" "}
-                ${total}
-              </Text>
-            </Box>
-          </Stack>
-        </Stack>
-      </Container>
+        </Container>
+      </HourContext.Provider>
     </>
   );
 }
