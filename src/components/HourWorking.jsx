@@ -9,15 +9,92 @@ import {
 import { useEffect, useState } from "react";
 import useHour from "../hooks/useHour";
 
-const HourWorking = ({ title, seter, hour }) => {
+export const Hours = [
+  {
+    value: 0,
+    name: "0"
+  },
+  {
+    value: 0.5,
+    name: "0,5"
+  },
+  {
+    value: 1,
+    name: "1"
+  },
+  {
+    value: 1.5,
+    name: "1,5"
+  }
+]
+
+export const HOURS = () => {
+  let acc = 0
+  let count = 24
+  const arrHours = []
+
+  for (let i = 0; i <= count; i++) {
+
+    if (i <= count) {
+
+      if (acc === 0) {
+
+        const objHour = {
+          value: acc,
+          name: acc.toString()
+        }
+
+        arrHours.push(objHour)
+
+        acc = acc + 0.5
+      } else {
+        const objHour = {
+          value: acc,
+          name: acc.toString()
+        }
+        arrHours.push(objHour)
+        acc = acc + 0.5
+      }
+    }
+  }
+
+  return arrHours
+}
+
+const HourWorking = ({ id, title, hour, days, setDays }) => {
+
+
+
+  const hours = HOURS()
+
   const { colorMode } = useColorMode();
-  const validateHours = (evt, update) => {
-    if (evt.target.value.length == 0) {
-      console.log("Is zero");
-      update(0);
+  const validateHours = (evt) => {
+
+
+    const padreHora = evt.target
+    const papa = padreHora.parentNode.parentNode
+    const DayId = papa.children[0].id
+
+
+    if (evt.target.value.length === 0) {
+
     } else {
       let hourDay = parseFloat(evt.target.value);
-      update(hourDay);
+      console.log(typeof DayId);
+      const obj = days.find((item) => item.id === parseInt(DayId))
+      obj.value = hourDay
+      console.log(obj);
+
+      const newData = days.map(item => {
+        if (item.id === obj.id) {
+          return obj;
+        }
+        return item;
+      });
+
+      setDays(newData)
+
+
     }
   };
 
@@ -27,36 +104,33 @@ const HourWorking = ({ title, seter, hour }) => {
         fontSize="20px"
         textTransform="capitalize"
         color={colorMode == "dark" ? "#E8E8E8" : "#323643"}
+        id={id}
       >
         {title}
       </Text>
       <Select
         width="120px"
-        placeholder="hour"
+        placeholder="hora/s"
         color={colorMode == "dark" ? "#11999E" : "#323643"}
         fontSize="20px"
-        onChange={(e) => validateHours(e, seter)}
+        onChange={(e) => validateHours(e)}
       >
         {hour && (
-          <option value={hour} selected>
+          <option id="hijo" value={hour} selected>
             {hour}
           </option>
         )}
 
-        <option value="0">0</option>
-        <option value="0.5">0.5</option>
-        <option value="1">1</option>
-        <option value="1.5">1.5</option>
-        <option value="2">2</option>
-        <option value="2.5">2.5</option>
-        <option value="3">3</option>
-        <option value="3.5">3.5</option>
-        <option value="4">4</option>
-        <option value="4.5">4.5</option>
-        <option value="5">5</option>
+        {
+          hours.map((hr) => (
+            <option id="hijo" value={hr.value}>{hr.name}</option>
+          ))
+        }
       </Select>
     </Box>
   );
 };
+
+
 
 export default HourWorking;
