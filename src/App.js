@@ -38,7 +38,7 @@ function App() {
           flexDirection="column"
           gap={4}
           minHeight="100vh"
-          bgColor={colorMode == "dark" ? "#222831" : "FCFDF2"}
+          bgColor={colorMode == "dark" ? "#16213E" : "#F9F9F9"}
           padding={4}
         >
           <Stack
@@ -50,10 +50,12 @@ function App() {
             <Text
               width="100%"
               fontSize="32px"
+              fontWeight={600}
+              fontFamily={"Poppins"}
               textAlign="center"
-              color={colorMode == "dark" ? "#F7F7F7" : "#181818"}
+              color={colorMode == "dark" ? "#FFF" : "#181818"}
             >
-              Horas extras
+              WHOUR
             </Text>
             <IconButton
               icon={colorMode == "dark" ? <SunIcon /> : <MoonIcon />}
@@ -64,10 +66,12 @@ function App() {
             direction={{ base: "column", md: "row" }}
             width={{ base: "100%", md: "100%" }}
             maxWidth="900px"
-            bgColor={colorMode == "dark" ? "#30475E" :"#C7EEFF"  }
+            // bgColor={colorMode == "dark" ? "#152A38" : "#fafafa"}
             justifyContent="center"
             padding={4}
-            borderRadius="6px"
+            borderRadius={"md"}
+
+            border={colorMode == "dark" ? "1px solid #11999E" : "1px solid #000"}
           >
             <ListHourWorking setTotal={setTotal} />
             <Stack

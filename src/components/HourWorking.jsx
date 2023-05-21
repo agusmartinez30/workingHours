@@ -83,7 +83,6 @@ const HourWorking = ({ id, title, hour, days, setDays }) => {
       console.log(typeof DayId);
       const obj = days.find((item) => item.id === parseInt(DayId))
       obj.value = hourDay
-      console.log(obj);
 
       const newData = days.map(item => {
         if (item.id === obj.id) {
@@ -103,6 +102,8 @@ const HourWorking = ({ id, title, hour, days, setDays }) => {
       <Text
         fontSize="20px"
         textTransform="capitalize"
+        fontFamily={'Poppins'}
+        fontWeight={600}
         color={colorMode == "dark" ? "#E8E8E8" : "#323643"}
         id={id}
       >
@@ -111,7 +112,7 @@ const HourWorking = ({ id, title, hour, days, setDays }) => {
       <Select
         width="120px"
         placeholder="hora/s"
-        color={colorMode == "dark" ? "#11999E" : "#323643"}
+        color={colorMode == "dark" ? "#fff" : "#323643"}
         fontSize="20px"
         onChange={(e) => validateHours(e)}
       >

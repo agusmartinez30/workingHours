@@ -41,19 +41,19 @@ const ListHourWorking = ({ setTotal }) => {
       id: 7,
       name: "Domingo",
       value: 0,
-    }
+    },
   ];
 
   const [days, setDays] = useState(
     JSON.parse(localStorage.getItem("DIAS")) || DAYS
-    );
+  );
 
   useEffect(() => {
     let count = 0;
     days.map((day) => (count = count + day.value));
     setTotal(count);
     console.log(days);
-    localStorage.setItem("DIAS", JSON.stringify(days))
+    localStorage.setItem("DIAS", JSON.stringify(days));
   }, [days]);
 
   return (
@@ -63,15 +63,15 @@ const ListHourWorking = ({ setTotal }) => {
       flexDirection="column"
       padding={6}
       gap={4}
-      bgColor={colorMode == "dark" ? "#152A38" : "#ffffff"}
-      borderRadius="6px"
-      boxShadow="sm"
+      bgColor={"transparent"}
+      borderRight={{"base": 0, "md": "1px solid #11999E"}}
+      borderBottom={{"base": "1px solid #11999E", "md": 0 }}
     >
       <Box display="flex" justifyContent="space-between">
-        <Text fontSize="24px" color="#11999E">
+        <Text fontSize="24px" fontFamily={"Poppins"} color="#11999E">
           Día
         </Text>
-        <Text fontSize="24px" color="#11999E">
+        <Text fontSize="24px" fontFamily={"Poppins"} color="#11999E">
           Hora
         </Text>
       </Box>

@@ -14,9 +14,8 @@ const PriceHour = ({ total, setPrecio }) => {
         justifyContent="center"
         padding={6}
         gap={4}
-        bgColor={colorMode == "dark" ? "#152A38" : "#ffffff"}
-        borderRadius="6px"
-        boxShadow='sm'
+        bgColor={"transparent"}      
+        borderBottom={"1px solid #11999E"}
       >
         <Box
           display="flex"
@@ -24,7 +23,7 @@ const PriceHour = ({ total, setPrecio }) => {
           justifyContent="space-between"
           alignItems="center"
           gap={4}
-   
+
         >
           <Box
             width="100%"
@@ -32,15 +31,19 @@ const PriceHour = ({ total, setPrecio }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Text fontSize="16px" color="#11999E">
+            <Text fontSize="22px" fontFamily={'Poppins'} color="#11999E">
               Total horas
             </Text>
-            <Text fontSize="32px"   color={colorMode == "dark" ? "#fff" : "#323643"}>
+            <Text fontSize="32px" color={colorMode == "dark" ? "#fff" : "#323643"}>
               {total}
             </Text>
           </Box>
-          <Text fontSize="32px"   color={colorMode == "dark" ? "#11999E" : "#323643"}>
-            x
+          <Text fontSize="32px" color={colorMode == "dark" ? "#11999E" : "#323643"}>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#11999E" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M18 6l-12 12" />
+              <path d="M6 6l12 12" />
+            </svg>
           </Text>
 
           <Box
@@ -48,16 +51,19 @@ const PriceHour = ({ total, setPrecio }) => {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
+            gap={2}
           >
-            <Text fontSize="16px"  color="#11999E">
-              Precio/Hora
+            <Text fontSize="18px" fontFamily={'Poppins'} color="#11999E">
+            <span> Precio por</span>
+             <br/>
+             Hora 
             </Text>
 
             <Input
               width="120px"
               fontSize="22px"
               textAlign="center"
-              color="#11999E"
+              color={colorMode == "dark" ? "#fff" : "#323643"}
               placeholder="Ex. 200"
               padding="20px"
               size="sm"
